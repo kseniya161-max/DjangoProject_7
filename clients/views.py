@@ -34,6 +34,7 @@ class ClientDeleteView(DeleteView):
 class MessageListView(ListView):
     model = Message
     template_name = 'message_list.html'
+    context_object_name = 'list_messages'
 
 
 class MessageCreateView(CreateView):
@@ -43,7 +44,7 @@ class MessageCreateView(CreateView):
     success_url = reverse_lazy('message_list')
 
 
-class MessageUpdateView(CreateView):
+class MessageUpdateView(UpdateView):
     model = Message
     template_name = 'message_add.html'
     fields = ['header', 'content']
