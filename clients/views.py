@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
-from config.clients.models import Clients, Message, Mailing
+from clients.models import Clients, Message, Mailing
 
 
 class ClientListView(ListView):
