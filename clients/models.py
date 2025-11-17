@@ -17,3 +17,18 @@ class Message(models.Model):
 
     def __str__(self):
         return self.header
+
+
+class Mailing(models.Model):
+    STATUS_CHOICES = [('created', 'создана'),
+                      ('started', 'запущена'),
+                      ('completed', 'завершена')]
+
+    datetime = models. DateTimeField()
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='created')
+    message = models.ForeignKey(Message, on_delete=models.CASCADE)
+    recipients = models.ManyToManyField(Clients)
+
+    def __str__(self):
+        return f'Рассылка: {self.message.heder}  - Статус: {self.get_status_display()}'
+
