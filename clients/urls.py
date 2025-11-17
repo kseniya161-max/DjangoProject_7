@@ -1,8 +1,8 @@
 from django.contrib.admin import views
 from django.urls import path, include
 
-from config. clients.views import ClientListView, ClientCreateView, ClientUpdateView, ClientDeleteView, MessageListView, MessageCreateView, MessageUpdateView, MessageDeleteView
 
+from config.clients.views import ClientListView, ClientCreateView, ClientUpdateView, ClientDeleteView, MessageListView, MessageCreateView, MessageUpdateView,MessageDeleteView
 
 app_name = "clients"
 
