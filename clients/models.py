@@ -34,3 +34,6 @@ class Mailing(models.Model):
     def __str__(self):
         return f'Рассылка: {self.message.header}  - Статус: {self.get_status_display()}'
 
+
+
+

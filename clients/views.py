@@ -1,7 +1,9 @@
+from django.core.checks import messages
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
+from clients.forms import MailingSendForm
 from clients.models import Clients, Message, Mailing
 
 
@@ -83,7 +85,24 @@ class MailingDeleteView(DeleteView):
     success_url = reverse_lazy('mailing_list')
 
 
+class MailingSendView(CreateView):
+    form_class = MailingSendForm
+    template_name = 'mailing_send.html'
+    success_url = reverse_lazy('mailing_list')
 
+
+    def form_valid(self, form):
+        mailing = form.save(commit=False)
+        mailing.status = 'started'
+        mailing.save()
+
+        self.send_mailing(mailing)
+        messages.success(self.request, 'Рассылка успешно отправлена')
+        return super().form_valid(form)
+
+    def send_mailing(self, mailing):
+        for recipient in mailing.recipients.all():
+            pass
 
 
 
