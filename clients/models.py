@@ -35,7 +35,7 @@ class Mailing(models.Model):
         return f'Рассылка: {self.message.header}  - Статус: {self.get_status_display()}'
 
 
-class MailingAttemt(models.Model):
+class MailingAttempt(models.Model):
     """ Модель попытки рассылок"""
     STATUS_CHOICES = [('success', 'успешно'),
                       ('failed', 'неуспешно'),]
