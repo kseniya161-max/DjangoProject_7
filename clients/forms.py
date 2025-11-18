@@ -1,6 +1,7 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, forms
 from django.core.exceptions import ValidationError
-from clients.models import Message, Clients
+from clients.models import Message, Clients, Mailing
+from django import forms
 
 
 
@@ -37,3 +38,8 @@ class MessageForm(ModelForm):
         self.fields['header'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите Заголовок'})
         self.fields['content'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите Контент'})
 
+
+class MailingSendForm(forms.ModelForm):
+    class Meta:
+        model = Mailing
+        fields=['message']
