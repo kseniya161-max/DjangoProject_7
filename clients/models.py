@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+
 
 class Clients(models.Model):
     email = models.EmailField(max_length=100, unique=True)
@@ -25,7 +27,7 @@ class Mailing(models.Model):
                       ('started', 'запущена'),
                       ('completed', 'завершена')]
 
-    datetime_start = models. DateTimeField()
+    datetime_start = models. DateTimeField(default=timezone.now)
     datetime_end = models.DateTimeField()
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='created')
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
