@@ -35,5 +35,19 @@ class Mailing(models.Model):
         return f'Рассылка: {self.message.header}  - Статус: {self.get_status_display()}'
 
 
+class MailingAttemt(models.Model):
+    """ Модель попытки рассылок"""
+    STATUS_CHOICES = [('success', 'успешно'),
+                      ('failed', 'неуспешно'),]
+
+    mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE)
+    attempt_time = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    server_response = models.TextField(blank=True)
+
+
+    def __str__(self):
+        return f'Попытка рассылки: {self.status} - {self.attempt_time}'
+
 
 
