@@ -10,7 +10,7 @@ from clients.models import Clients, Message, Mailing, MailingAttempt, MailingAtt
 
 class ClientListView(ListView):
     model = Clients
-    template_name = 'clients_list.html'
+    template_name = 'client_list.html'
     context_object_name = 'list_clients'
 
 
