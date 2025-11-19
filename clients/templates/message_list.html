@@ -2,7 +2,7 @@
 {% block title %} Список сообщений {% endblock %}
 {% block content %}
 <h3>Список сообщений</h3>
-<a href="{% url 'clients:message_list' %}" class='btn btn-primary mb-3'>Добавить сообщение</a>
+<a href="{% url 'clients:message_add' %}" class='btn btn-primary mb-3'>Добавить сообщение</a>
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -25,7 +25,7 @@
             </tr>
             {% empty %}
             <tr>
-            <td colspan="5" class="text-center">Нет сообщений для отображения.</td>
+            <td colspan="4" class="text-center">Нет сообщений для отображения.</td>
              </tr>
             {% endfor %}
     </tbody>

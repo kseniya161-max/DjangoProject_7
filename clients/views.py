@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 
-from clients.forms import MailingSendForm, ClientForm
+from clients.forms import MailingSendForm, ClientForm, MessageForm
 from clients.models import Clients, Message, Mailing, MailingAttempt, MailingAttempt
 
 
@@ -42,8 +42,8 @@ class MessageListView(ListView):
 
 class MessageCreateView(CreateView):
     model = Message
+    form_class = MessageForm
     template_name = 'message_create.html'
-    fields = ['header', 'content']
     success_url = reverse_lazy('message_list')
 
 
