@@ -2,7 +2,7 @@ from django.core.checks import messages
 from django.core.mail import send_mail
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 
 from clients.forms import MailingSendForm
 from clients.models import Clients, Message, Mailing, MailingAttempt, MailingAttempt
@@ -123,7 +123,7 @@ class MailingSendView(CreateView):
                     status='failed',
                     server_response=str(e)
                 )
-class HomePageView(ListView):
+class HomePageView(TemplateView):
     template_name = 'home.html'
 
     def get_context_data(self,**kwargs):
