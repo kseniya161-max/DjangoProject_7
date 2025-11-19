@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 
-from clients.forms import MailingSendForm
+from clients.forms import MailingSendForm, ClientForm
 from clients.models import Clients, Message, Mailing, MailingAttempt, MailingAttempt
 
 
@@ -16,16 +16,16 @@ class ClientListView(ListView):
 
 class ClientCreateView(CreateView):
     model = Clients
+    form_class = ClientForm
     template_name = 'clients_create.html'
-    fields = ['name', 'email', 'comment']
     success_url = reverse_lazy('clients_list')
 
 
 class ClientUpdateView(UpdateView):
     model = Clients
-    template_name = 'clients_add.html'
-    fields = ['name', 'email', 'comment']
-    success_url = reverse_lazy('clients_list')
+    form_class = ClientForm
+    template_name = 'client_edit.html'
+    success_url = reverse_lazy('client_list')
 
 
 class ClientDeleteView(DeleteView):
