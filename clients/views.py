@@ -30,7 +30,7 @@ class ClientUpdateView(UpdateView):
 
 class ClientDeleteView(DeleteView):
     model = Clients
-    template_name = 'clients_del.html'
+    template_name = 'client_delete.html'
     success_url = reverse_lazy('clients_list')
 
 
