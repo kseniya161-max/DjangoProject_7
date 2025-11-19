@@ -21,8 +21,8 @@
             <td>{{client.email}}</td>
             <td>{{client.comment}}</td>
             <td>
-                <a href="{% url 'clients:client_update' client.pk %}" class='btn btn-warning mb-3'>Редактировать</a>
-                <a href="{% url 'clients:client_delete' client.pk %}" class='btn btn-warning mb-3'>Удалить</a>
+                <a href="{% url 'clients:client_update' client.pk %}" class='btn btn-primary mb-3'>Редактировать</a>
+                <a href="{% url 'clients:client_delete' client.pk %}" class='btn btn-danger mb-3'>Удалить</a>
             </td>
         </tr>
     {% empty %}
