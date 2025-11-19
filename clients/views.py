@@ -17,15 +17,15 @@ class ClientListView(ListView):
 class ClientCreateView(CreateView):
     model = Clients
     form_class = ClientForm
-    template_name = 'clients_create.html'
-    success_url = reverse_lazy('clients_list')
+    template_name = 'client_create.html'
+    success_url = reverse_lazy('clients:client_list')
 
 
 class ClientUpdateView(UpdateView):
     model = Clients
     form_class = ClientForm
     template_name = 'client_edit.html'
-    success_url = reverse_lazy('client_list')
+    success_url = reverse_lazy('clients:client_list')
 
 
 class ClientDeleteView(DeleteView):
