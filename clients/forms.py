@@ -42,4 +42,4 @@ class MessageForm(ModelForm):
 class MailingSendForm(forms.ModelForm):
     class Meta:
         model = Mailing
-        fields=['message']
+        fields=['recipients', 'message', 'status', 'datetime_start', 'datetime_end']

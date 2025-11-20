@@ -68,9 +68,10 @@ class MailingListView(ListView):
 
 class MailingCreateView(CreateView):
     model = Mailing
+    form_class = MailingSendForm
     template_name = 'mailing_create.html'
-    fields = ['datetime', 'status', 'message', 'recipients']
-    success_url = reverse_lazy('mailing_list')
+    # fields = ['datetime', 'status', 'message', 'recipients']
+    success_url = reverse_lazy('clients:mailing_list')
 
 
 class MailingUpdateView(UpdateView):

@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.db import models
 from django.utils import timezone
 
@@ -28,7 +30,7 @@ class Mailing(models.Model):
                       ('completed', 'завершена')]
 
     datetime_start = models. DateTimeField(default=timezone.now)
-    datetime_end = models.DateTimeField()
+    datetime_end = models.DateTimeField(default=timezone.now() + timedelta(days=1))
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='created')
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
     recipients = models.ManyToManyField(Clients)

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %} Создание рассылки {% endblock %}
+{% block content %}
+
+
+<h2>Создание Рассылок</h2>
+<form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="form-group">
+        {{ form.recipients.label }}
+        {{ form.recipients }}
+    </div>
+    <div class="form-group">
+        {{ form.message.label }}
+        {{ form.message }}
+    </div>
+    <div class="form-group">
+        {{ form.status.label }}
+        {{ form.status }}
+    </div>
+    <div class="form-group">
+        {{ form.datetime_start.label }}
+        {{ form.datetime_start }}
+    </div>
+    <div class="form-group">
+        {{ form.datetime_end.label }}
+        {{ form.datetime_end }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a href="{% url 'clients:mailing_list' %}" class="btn btn-secondary">Отмена</a>
+</form>
+
+{% endblock %}
