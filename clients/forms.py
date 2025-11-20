@@ -43,3 +43,12 @@ class MailingSendForm(forms.ModelForm):
     class Meta:
         model = Mailing
         fields=['recipients', 'message', 'status', 'datetime_start', 'datetime_end']
+
+
+    def clean(self):
+        cleaned_data = super().clean()
+        datetime_start = cleaned_data.get('datetime_start')
+        datetime_end = cleaned_data.get('datetime_end')
+        if datetime_start and datetime_end and  datetime_end < datetime_start:
+            raise ValidationError('Дата завершения не может быть больше даты начала')
+        return cleaned_data
