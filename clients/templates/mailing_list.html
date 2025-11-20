@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %} Список Рассылок {% endblock %}
+{% block content %}
+<h1>Список Рассылок</h1>
+<a href="{% url 'clients:mailing_add' %}" class='btn btn-primary mb-3'>Добавить Рассылку</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>recipients</th>
+            <th>message</th>
+            <th>status</th>
+            <th>datetime_start</th>
+            <th>datetime_end</th>
+            <th>Действия с рассылками</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for mail in list_mailing %}
+        <tr>
+            <td>{{mail.id}}</td>
+            <td>{{mail.recipients.name}}</td>
+            <td>{{mail.message.header}}</td>
+            <td>{{mail.status}}</td>
+            <td>{{mail.datetime_start}}</td>
+            <td>{{mail.datetime_end}}</td>
+            <td>
+                <a href="{% url 'clients:mailing_update' mailing.pk %}" class='btn btn-primary mb-3'>Редактировать</a>
+                <a href="{% url 'clients:mailing_delete' mailing.pk %}" class='btn btn-danger mb-3'>Удалить</a>
+            </td>
+        </tr>
+    {% empty %}
+    <tr>
+            <td colspan="6" class="text-center">Нет рассылок для отображения.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+
