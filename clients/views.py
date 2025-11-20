@@ -44,20 +44,20 @@ class MessageCreateView(CreateView):
     model = Message
     form_class = MessageForm
     template_name = 'message_create.html'
-    success_url = reverse_lazy('message_list')
+    success_url = reverse_lazy('clients:message_list')
 
 
 class MessageUpdateView(UpdateView):
     model = Message
-    template_name = 'message_add.html'
+    template_name = 'message_edit.html'
     fields = ['header', 'content']
-    success_url = reverse_lazy('message_list')
+    success_url = reverse_lazy('clients:message_list')
 
 
 class MessageDeleteView(DeleteView):
     model = Message
     template_name = 'message_delete.html'
-    success_url = reverse_lazy('message_list')
+    success_url = reverse_lazy('clients:message_list')
 
 
 class MailingListView(ListView):

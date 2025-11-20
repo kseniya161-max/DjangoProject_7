@@ -2,8 +2,10 @@ from django.contrib.admin import views
 from django.urls import path, include
 
 
-from  clients.views import ClientListView, ClientCreateView, ClientUpdateView, ClientDeleteView, MessageListView, MessageCreateView, MessageUpdateView,MessageDeleteView
+from  clients.views import ClientListView, ClientCreateView, ClientUpdateView, ClientDeleteView
 from  clients.views import MailingListView,MailingCreateView,MailingUpdateView,MailingDeleteView,HomePageView
+from  clients.views import MessageListView, MessageCreateView, MessageUpdateView, MessageDeleteView
+
 app_name = "clients"
 
 urlpatterns = [
