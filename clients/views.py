@@ -77,21 +77,21 @@ class MailingCreateView(CreateView):
 class MailingUpdateView(UpdateView):
     model = Mailing
     template_name = 'mailing_update.html'
-    fields = ['datetime', 'status', 'message', 'recipients']
-    success_url = reverse_lazy('mailing_list')
+    form_class = MailingSendForm
+    success_url = reverse_lazy('clients:mailing_list')
 
 
 class MailingDeleteView(DeleteView):
     model = Mailing
     template_name = 'mailing_delete.html'
-    success_url = reverse_lazy('mailing_list')
+    success_url = reverse_lazy('clients:mailing_list')
 
 
 
 class MailingSendView(CreateView):
     form_class = MailingSendForm
     template_name = 'mailing_send.html'
-    success_url = reverse_lazy('mailing_list')
+    success_url = reverse_lazy('clients:mailing_list')
 
 
     def form_valid(self, form):
