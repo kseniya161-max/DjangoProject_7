@@ -1,4 +1,4 @@
-from django.core.checks import messages
+from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -6,6 +6,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, T
 
 from clients.forms import MailingSendForm, ClientForm, MessageForm
 from clients.models import Clients, Message, Mailing, MailingAttempt
+from config.settings import DEFAULT_FROM_EMAIL
 
 
 class ClientListView(ListView):
@@ -98,8 +99,23 @@ class MailingSendView(CreateView):
         mailing = form.cleaned_data['mailing']
         mailing.status = 'started'
         mailing.save()
+        try:
+
+            send_mail(
+                'Тестовое письмо',
+                'Это тестовое письмо от Django.',
+                DEFAULT_FROM_EMAIL,
+                ['baharevak161@gmail.com'],
+                fail_silently=True,
+            )
+        except Exception as e:
+            messages.error(self.request, f'Ошибка отправки тестового письма: {e}')
+            return super().form_invalid(form)
 
         self.send_mailing(mailing)
+        mailing.status = 'completed'
+        mailing.save()
+
         messages.success(self.request, 'Рассылка успешно отправлена')
         return super().form_valid(form)
 
@@ -109,7 +125,7 @@ class MailingSendView(CreateView):
                 send_mail(
                     mailing.message.header,
                     mailing.message.content,
-                    'baharevaxen@yandex.ru',
+                    DEFAULT_FROM_EMAIL,
                     [recipient.email],
                     fail_silently=False,
                 )
