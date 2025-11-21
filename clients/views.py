@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 
 from clients.forms import MailingSendForm, ClientForm, MessageForm
-from clients.models import Clients, Message, Mailing, MailingAttempt, MailingAttempt
+from clients.models import Clients, Message, Mailing, MailingAttempt
 
 
 class ClientListView(ListView):
