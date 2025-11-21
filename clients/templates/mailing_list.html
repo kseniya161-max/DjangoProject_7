@@ -2,7 +2,8 @@
 {% block title %} Список Рассылок {% endblock %}
 {% block content %}
 <h3 style="text-align: center; margin: 20px 0;">Список Рассылок</h3>
-<a href="{% url 'clients:mailing_add' %}" class='btn btn-primary mb-3'>Добавить Рассылку</a>
+<a href="{% url 'clients:mailing_add' %}" class='btn btn-primary mb-3'>Создать Рассылку</a>
+<a href="{% url 'clients:mailing_send' %}" class='btn btn-primary mb-3'>Отправка рассылок</a>
 <table class="table table-bordered">
     <thead>
         <tr>

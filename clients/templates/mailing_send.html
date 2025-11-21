@@ -1,10 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %} Отправление рассылок {% endblock %}
+{% block content %}
+<h2 style="text-align: center;">Отправка рассылки</h2>
 
-</body>
-</html>
+<form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <div class="form-group">
+        {{ form.recipients.label }}
+        {{ form.recipients }}
+        {{ form.recipients.errors }}
+    </div>
+
+    <div class="form-group">
+        {{ form.mailing.label }}
+        {{ form.mailing }}
+        {{ form.mailing.errors }}
+    </div>
+
+    <div class="form-group">
+        {{ form.datetime_start.label }}
+        {{ form.datetime_start }}
+        {{ form.datetime_start.errors }}
+    </div>
+
+    <div class="form-group">
+        {{ form.datetime_end.label }}
+        {{ form.datetime_end }}
+        {{ form.datetime_end.errors }}
+    </div>
+
+    <div class="form-group">
+        {{ form.status.label }}
+        {{ form.status }}
+        {{ form.status.errors }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Отправить рассылку</button>
+    <a href="{% url 'clients:mailing_list' %}" class="btn btn-secondary">Отмена</a>
+</form>
+
+{% endblock %}

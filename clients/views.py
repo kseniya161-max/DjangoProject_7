@@ -95,7 +95,7 @@ class MailingSendView(CreateView):
 
 
     def form_valid(self, form):
-        mailing = form.save(commit=False)
+        mailing = form.cleaned_data['mailing']
         mailing.status = 'started'
         mailing.save()
 
