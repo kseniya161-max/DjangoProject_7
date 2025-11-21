@@ -81,6 +81,11 @@ class MailingUpdateView(UpdateView):
     template_name = 'mailing_update.html'
     success_url = reverse_lazy('clients:mailing_list')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['instance'] = self.get_object()
+        return kwargs
+
 
 class MailingDeleteView(DeleteView):
     model = Mailing
