@@ -32,7 +32,7 @@ class ClientUpdateView(UpdateView):
 class ClientDeleteView(DeleteView):
     model = Clients
     template_name = 'client_delete.html'
-    success_url = reverse_lazy('clients_list')
+    success_url = reverse_lazy('clients:client_list')
 
 
 class MessageListView(ListView):
@@ -77,8 +77,8 @@ class MailingCreateView(CreateView):
 
 class MailingUpdateView(UpdateView):
     model = Mailing
-    template_name = 'mailing_update.html'
     form_class = MailingSendForm
+    template_name = 'mailing_update.html'
     success_url = reverse_lazy('clients:mailing_list')
 
 
