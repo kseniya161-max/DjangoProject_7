@@ -1,3 +1,17 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-# Create your models here.
+class User(AbstractUser):
+    username = models.CharField(max_length=50, unique=True,verbose_name='имя пользователя',help_text='Введите имя пользователя')
+    email = models.EmailField(max_length=50,unique=True, verbose_name='Email', help_text='Введите email')
+    email_verified = models.BooleanField(default=False, verbose_name='Email подтвержден')
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
