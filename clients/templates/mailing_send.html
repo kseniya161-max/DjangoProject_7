@@ -8,24 +8,6 @@
     {{ form.non_field_errors }}
 
     <div class="form-group">
-        {{ form.recipients.label }}
-        {{ form.recipients }}
-        {{ form.recipients.errors }}
-    </div>
-
-     <div class="form-group">
-        {{ form.message.label }}
-        {{ form.message }}
-        {{ form.message.errors }}
-    </div>
-
-    <div class="form-group">
-        {{ form.mailing.label }}
-        {{ form.mailing }}
-        {{ form.mailing.errors }}
-    </div>
-
-    <div class="form-group">
         {{ form.datetime_start.label }}
         {{ form.datetime_start }}
         {{ form.datetime_start.errors }}
@@ -42,6 +24,19 @@
         {{ form.status }}
         {{ form.status.errors }}
     </div>
+
+    <div class="form-group">
+        {{ form.message.label }}
+        {{ form.message }}
+        {{ form.message.errors }}
+    </div>
+
+    <div class="form-group">
+        {{ form.recipients.label }}
+        {{ form.recipients }}
+        {{ form.recipients.errors }}
+    </div>
+
 
     <button type="submit" class="btn btn-primary">Отправить рассылку</button>
     <a href="{% url 'clients:mailing_list' %}" class="btn btn-secondary">Отмена</a>

@@ -71,8 +71,15 @@ class MailingCreateView(CreateView):
     model = Mailing
     form_class = MailingSendForm
     template_name = 'mailing_create.html'
-    # fields = ['datetime', 'status', 'message', 'recipients']
     success_url = reverse_lazy('clients:mailing_list')
+
+    def form_valid(self, form):
+        if form.is_valid():
+            return super().form_valid(form)
+        else:
+            print(form.errors)
+            return self.form_invalid(form)
+
 
 
 class MailingUpdateView(UpdateView):
@@ -85,6 +92,13 @@ class MailingUpdateView(UpdateView):
         kwargs = super().get_form_kwargs()
         kwargs['instance'] = self.get_object()
         return kwargs
+
+    def form_valid(self, form):
+        if form.is_valid():
+            return super().form_valid(form)
+        else:
+            print(form.errors)
+            return self.form_invalid(form)
 
 
 class MailingDeleteView(DeleteView):
@@ -101,7 +115,7 @@ class MailingSendView(CreateView):
 
 
     def form_valid(self, form):
-        mailing = form.cleaned_data['mailing']
+        mailing = form.save(commit=False)
         mailing.status = 'started'
         mailing.save()
         try:

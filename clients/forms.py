@@ -40,7 +40,7 @@ class MessageForm(ModelForm):
 
 
 class MailingSendForm(forms.ModelForm):
-    mailing = forms.ModelChoiceField(queryset=Mailing.objects.all(), required=True)
+    # mailing = forms.ModelChoiceField(queryset=Mailing.objects.all(), required=True)
     class Meta:
         model = Mailing
         fields=['recipients', 'message', 'status', 'datetime_start', 'datetime_end']
