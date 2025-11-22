@@ -1,0 +1,17 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Мой сайт</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'clients:home' %}">Главная</a>
+            </li>
+            <li><a class="nav-link" href="{% url 'clients:client_list' %}">Список клиентов</a></li>
+            <li><a class="nav-link" href="{% url 'clients:message_list' %}">Список сообщений</a></li>
+            <li><a class="nav-link" href="{% url 'clients:mailing_list' %}">Список рассылок</a></li>
+            <li><a class="nav-link" href="{% url 'Users:register' %}">Регистрация</a></li>
+</ul>
+    </div>
+</nav>
