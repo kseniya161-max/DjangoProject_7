@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %} Удаление  рассылки {% endblock %}
 {% block content %}
-<h1>Удаление рассылки</h1>
+<h2>Удаление рассылки</h2>
 <p>Вы уверены что хотите удалить рассылку "{{ object.name }}"?</p>
 <form method="post">
     {% csrf_token %}
