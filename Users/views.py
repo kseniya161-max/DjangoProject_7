@@ -1,10 +1,11 @@
 from django.contrib import messages
-from django.shortcuts import render
+from django.contrib.auth import get_user_model
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
 from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic import CreateView
 from itsdangerous import URLSafeTimedSerializer
 from Users.forms import UserRegisterForm
@@ -23,13 +24,11 @@ class CreateUserView(CreateView):
     def form_valid(self, form):
         user = form.save()
         self.send_confirmation_email(user)
-        return super().form_valid(form)
-
         messages.success(self.request, 'Ваш аккаунт был успешно создан! Проверьте Вашу почту для подтверждения.')
         return super().form_valid(form)
 
-    def send_confirmation_email(user):
-        """Подтверждение Email"""
+    def send_confirmation_email(self, user):
+        """Отправка письма для Подтверждение Email"""
         s = URLSafeTimedSerializer(settings.SECRET_KEY)
         token = s.dumps(user.email, salt='email-confirmation')
         uid = urlsafe_base64_encode(force_bytes(user.pk))
@@ -39,6 +38,28 @@ class CreateUserView(CreateView):
             'confirmation_link': confirmation_link,
         })
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
+
+User = get_user_model()
+
+def confirm_email(request, uidb64, token):
+    """Подтверждение Email"""
+    try:
+        s = URLSafeTimedSerializer(settings.SECRET_KEY)
+        email = s.loads(token, salt='email-confirmation', max_age=3600)
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+        if user.email == email:
+            user.email_verified = True
+            user.save()
+            messages.success(request, 'Ваш email был успешно подтвержден!')
+            return redirect('Users:login')
+    except Exception as e:
+        messages.error(request, 'Ссылка для подтверждения недействительна или истекла.')
+    return redirect('Users:register')
+
+
+
+
 
 
 
