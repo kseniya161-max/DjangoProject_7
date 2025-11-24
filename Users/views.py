@@ -68,7 +68,7 @@ class CustomLoginView(LoginView):
 
 
 class CustomLogoutView(LogoutView):
-    next_page = 'login.html'
+    next_page = reverse_lazy('Users:login')
     def __str__(self):
         return CustomLogoutView
 
