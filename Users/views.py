@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.template.loader import render_to_string
@@ -56,6 +57,20 @@ def confirm_email(request, uidb64, token):
     except Exception as e:
         messages.error(request, 'Ссылка для подтверждения недействительна или истекла.')
     return redirect('Users:register')
+
+
+class CustomLoginView(LoginView):
+    template_name = 'login.html'
+
+    def __str__(self):
+        return CustomLoginView
+
+
+class CustomLogoutView(LogoutView):
+    next_page = 'login.html'
+    def __str__(self):
+        return CustomLogoutView
+
 
 
 
