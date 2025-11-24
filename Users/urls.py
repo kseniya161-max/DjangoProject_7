@@ -1,6 +1,6 @@
 from django.urls import path
 
-from Users.views import CreateUserView
+from Users.views import CreateUserView, confirm_email
 
 app_name = "Users"
 
