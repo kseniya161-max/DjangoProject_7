@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.template.loader import render_to_string
@@ -74,7 +74,8 @@ class CustomLogoutView(LogoutView):
         return CustomLogoutView
 
 
-
+class CustomPasswordResetView(PasswordResetView):
+    success_url = reverse_lazy('Users:password_reset_done')
 
 
 
