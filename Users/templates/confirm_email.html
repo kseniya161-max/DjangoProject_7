@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}Регистрация{% endblock %}
+{% block content %}
+<h2>Подтверждение Email</h2>
+<p>Пожалуйста, подтвердите Ваш email, перейдя по следующей ссылке:</p>
+<a href="{{ confirmation_link }}" class="btn btn-primary">Подтвердить Email</a>
+{% endblock %}
