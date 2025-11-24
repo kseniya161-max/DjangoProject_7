@@ -33,7 +33,7 @@ class CreateUserView(CreateView):
         s = URLSafeTimedSerializer(settings.SECRET_KEY)
         token = s.dumps(user.email, salt='email-confirmation')
         uid = urlsafe_base64_encode(force_bytes(user.pk))
-        confirmation_link = f"http://localhost:8000/confirm/{uid}/{token}/"
+        confirmation_link = f"http://localhost:8000/users/confirm/{uid}/{token}/"
         subject = 'Подтверждение email'
         message = render_to_string('email_confirmation.html', {
             'confirmation_link': confirmation_link,
@@ -56,6 +56,7 @@ def confirm_email(request, uidb64, token):
             return redirect('Users:login')
     except Exception as e:
         messages.error(request, 'Ссылка для подтверждения недействительна или истекла.')
+        messages.error(request, f"Ошибка при подтверждении email: {e}")
     return redirect('Users:register')
 
 
