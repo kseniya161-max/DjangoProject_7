@@ -9,7 +9,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic import CreateView
 from itsdangerous import URLSafeTimedSerializer
-from Users.forms import UserRegisterForm
+from Users.forms import UserRegisterForm, CustomAuthenticationForm
 from Users.models import User
 from config import settings
 from django.core.mail import send_mail
@@ -61,6 +61,7 @@ def confirm_email(request, uidb64, token):
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
+    authentication_form = CustomAuthenticationForm
 
     def __str__(self):
         return CustomLoginView

@@ -1,4 +1,5 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import forms
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from Users.models import User
 
@@ -29,3 +30,11 @@ class UserRegisterForm(UserCreationForm):
             'class': 'form-control',
             'placeholder': 'Введите еще раз пароль'
         })
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    username = forms.EmailField(label='Email')
+
+    class Meta:
+        model = User
+        fields = ['username', 'password']
