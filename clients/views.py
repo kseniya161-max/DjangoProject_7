@@ -1,14 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 
 from clients.forms import MailingSendForm, ClientForm, MessageForm
 from clients.models import Clients, Message, Mailing, MailingAttempt, EmailStatistics
 from config.settings import DEFAULT_FROM_EMAIL
-import logging
 
 
 
