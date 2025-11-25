@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -169,7 +170,7 @@ class HomePageView(TemplateView):
         context['unique_recipients'] = Clients.objects.count()
         return context
 
-class EmailStatisticsView(ListView):
+class EmailStatisticsView(LoginRequiredMixin, ListView):
     model = EmailStatistics
     template_name = 'email_statistic.html'
     context_object_name = 'statistic'
