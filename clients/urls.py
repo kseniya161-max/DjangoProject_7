@@ -24,4 +24,5 @@ urlpatterns = [
     path('mailing/send/', MailingSendView.as_view(), name='mailing_send'),
     path('home/', HomePageView.as_view(), name='home'),
     path('statistic/', EmailStatisticsView.as_view(), name='email_statistic'),
+    path('manager/clients/', ManagerClientListView.as_view(), name='manager_client_list'),
 ]

@@ -12,17 +12,23 @@ import logging
 
 
 
-class ClientListView(ListView):
+class ClientListView(LoginRequiredMixin, ListView):
     model = Clients
     template_name = 'client_list.html'
     context_object_name = 'list_clients'
 
+    def get_queryset(self):
+        return Clients.objects.filter(user=self.request.user)
 
-class ClientCreateView(CreateView):
+class ClientCreateView(LoginRequiredMixin, CreateView):
     model = Clients
     form_class = ClientForm
     template_name = 'client_create.html'
     success_url = reverse_lazy('clients:client_list')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class ClientUpdateView(UpdateView):
@@ -31,11 +37,18 @@ class ClientUpdateView(UpdateView):
     template_name = 'client_edit.html'
     success_url = reverse_lazy('clients:client_list')
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 
 class ClientDeleteView(DeleteView):
     model = Clients
     template_name = 'client_delete.html'
     success_url = reverse_lazy('clients:client_list')
+
+    def get_queryset(self):
+        return Clients.objects.filter(user=self.request.user)
 
 
 class MessageListView(ListView):
@@ -68,6 +81,12 @@ class MailingListView(ListView):
     model = Mailing
     template_name = 'mailing_list.html'
     context_object_name = 'list_mailing'
+
+    def get_queryset(self):
+        if self.request.user.role == 'manager':
+            return Mailing.objects.all()
+        else:
+            return Mailing.objects.filter(user=self.request.user)
 
 
 class MailingCreateView(CreateView):
@@ -190,6 +209,15 @@ class EmailStatisticsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return EmailStatistics.objects.filter(user=self.request.user)
+
+
+class ManegerClientListView(ListView):
+    model = Clients
+    template_name = 'manager_client_list.html'
+    context_object_name = 'list_clients'
+
+    def get_queryset(self):
+        return Clients.objects.all()
 
 
 
