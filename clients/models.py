@@ -1,7 +1,10 @@
 from datetime import timedelta
 
 from django.db import models
+from django.db.models import PositiveIntegerField
 from django.utils import timezone
+
+from Users.models import User
 
 
 class Clients(models.Model):
@@ -55,3 +58,11 @@ class MailingAttempt(models.Model):
 
 
 
+class EmailStatistics(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE)
+    success_attempt_mailing = models.PositiveIntegerField(default=0)
+    failed_attempt_mailing = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f'Количество успешных рассылок{self.success_attempt_mailing}, Количество неуспешных рассылок{self.failed_attempt_mailing}'
