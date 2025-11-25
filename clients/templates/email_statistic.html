@@ -3,24 +3,28 @@
 {% block title %}Статистика рассылок{% endblock %}
 
 {% block content %}
-
 <h2>Статистика рассылок</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Рассылка</th>
-            <th>Успешные попытки</th>
-            <th>Неуспешные попытки</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for stat in statistic %}
+
+{% if statistic %}
+    <table class="table">
+        <thead>
             <tr>
-                <td>{{ stat.mailing }}</td>
-                <td>{{ stat.success_attempt_mailing }}</td>
-                <td>{{ stat.failed_attempt_mailing }}</td>
+                <th>Рассылка</th>
+                <th>Успешные попытки</th>
+                <th>Неуспешные попытки</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for stat in statistic %}
+                <tr>
+                    <td>{{ stat.mailing }}</td>
+                    <td>{{ stat.success_attempt_mailing }}</td>
+                    <td>{{ stat.failed_attempt_mailing }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Нет данных для отображения.</p>
+{% endif %}
 {% endblock %}

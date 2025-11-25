@@ -8,6 +8,5 @@ from .models import Clients, Message, Mailing, EmailStatistics
 admin.site.register(Clients)
 admin.site.register(Message)
 admin.site.register(Mailing)
-admin.site.register(User, UserAdmin)
 admin.site.register(EmailStatistics)
 
