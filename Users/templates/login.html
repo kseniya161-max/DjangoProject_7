@@ -9,6 +9,12 @@
     {{ form.as_p }}
     <button type="submit" class="btn btn-primary">Войти</button>
 </form>
+
+<p>
+    <a href="{% url 'Users:password_reset' %}">Забыли пароль?</a>
+</p>
+
+
 {% if messages %}
     <ul class="messages">
         {% for message in messages %}
