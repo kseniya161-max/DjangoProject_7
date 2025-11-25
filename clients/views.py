@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 
 from clients.forms import MailingSendForm, ClientForm, MessageForm
-from clients.models import Clients, Message, Mailing, MailingAttempt
+from clients.models import Clients, Message, Mailing, MailingAttempt, EmailStatistics
 from config.settings import DEFAULT_FROM_EMAIL
 
 
@@ -169,6 +169,13 @@ class HomePageView(TemplateView):
         context['unique_recipients'] = Clients.objects.count()
         return context
 
+class EmailStatisticsView(ListView):
+    model = EmailStatistics
+    template_name = 'email_statistic.html'
+    context_object_name = 'statistic'
+
+    def get_queryset(self):
+        return EmailStatistics.objects.filter(user=self.request.user)
 
 
 
