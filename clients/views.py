@@ -2,21 +2,30 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
+from django.utils import cache
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 
 from clients.forms import MailingSendForm, ClientForm, MessageForm
 from clients.models import Clients, Message, Mailing, MailingAttempt, EmailStatistics
 from config.settings import DEFAULT_FROM_EMAIL
+from django.views.decorators.cache import cache_page, cache_control
+from django.core.cache import cache
 
 
-
+@method_decorator(cache_control(public=True, max_age=86400), name='dispatch')
 class ClientListView(LoginRequiredMixin, ListView):
     model = Clients
     template_name = 'client_list.html'
     context_object_name = 'list_clients'
 
     def get_queryset(self):
-        return Clients.objects.filter(user=self.request.user)
+        queryset = cache.get(f'clients_{self.request.user.id}')
+        if not queryset:
+            queryset = super().get_queryset().filter(user=self.request.user)
+            cache.set(f'clients_{self.request.user.id}', queryset, 60 * 15)
+
+        return queryset
 
 class ClientCreateView(LoginRequiredMixin, CreateView):
     model = Clients
@@ -26,7 +35,9 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        cache.delete(f'clients_{self.request.user.id}')
+        return response
 
 
 class ClientUpdateView(UpdateView):
@@ -37,7 +48,10 @@ class ClientUpdateView(UpdateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super().form_valid(form)
+        response =  super().form_valid(form)
+
+        cache.delete(f'clients_{self.request.user.id}')
+        return response
 
 
 class ClientDeleteView(DeleteView):
@@ -48,7 +62,12 @@ class ClientDeleteView(DeleteView):
     def get_queryset(self):
         return Clients.objects.filter(user=self.request.user)
 
+    def delete(self, request, *args, **kwargs):
+        response = super().delete(request, *args, **kwargs)
+        cache.delete(f'clients_{self.request.user.id}')
+        return response
 
+@method_decorator(cache_control(public=True, max_age=86400), name='dispatch')
 class MessageListView(ListView):
     model = Message
     template_name = 'message_list.html'
@@ -74,7 +93,7 @@ class MessageDeleteView(DeleteView):
     template_name = 'message_delete.html'
     success_url = reverse_lazy('clients:message_list')
 
-
+@method_decorator(cache_control(public=True, max_age=86400), name='dispatch')
 class MailingListView(ListView):
     model = Mailing
     template_name = 'mailing_list.html'
@@ -188,6 +207,7 @@ class MailingSendView(CreateView):
                 'failed_attempt_mailing': failed_count,
             }
         )
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class HomePageView(TemplateView):
     template_name = 'home.html'
 
