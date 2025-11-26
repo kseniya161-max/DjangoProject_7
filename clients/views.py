@@ -94,11 +94,8 @@ class MailingCreateView(CreateView):
     success_url = reverse_lazy('clients:mailing_list')
 
     def form_valid(self, form):
-        if form.is_valid():
-            return super().form_valid(form)
-        else:
-            print(form.errors)
-            return self.form_invalid(form)
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 
@@ -107,6 +104,11 @@ class MailingUpdateView(UpdateView):
     form_class = MailingSendForm
     template_name = 'mailing_update.html'
     success_url = reverse_lazy('clients:mailing_list')
+
+    def get_queryset(self):
+        if self.request.user.role == 'manager':
+            return Mailing.objects.filter(user=self.request.user)
+        return super().get_queryset()
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -125,6 +127,11 @@ class MailingDeleteView(DeleteView):
     model = Mailing
     template_name = 'mailing_delete.html'
     success_url = reverse_lazy('clients:mailing_list')
+
+    def get_queryset(self):
+        if self.request.user.role == 'manager':
+            return Mailing.objects.filter(user=self.request.user)
+        return super().get_queryset()
 
 
 class MailingSendView(CreateView):
