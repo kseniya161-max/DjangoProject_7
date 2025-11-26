@@ -69,3 +69,4 @@ class EmailStatistics(models.Model):
 
     def __str__(self):
         return f'Количество успешных рассылок{self.success_attempt_mailing}, Количество неуспешных рассылок{self.failed_attempt_mailing}'
+

@@ -4,9 +4,10 @@ from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.utils import cache
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView, DetailView
 
-from clients.forms import MailingSendForm, ClientForm, MessageForm
+from Users.models import User
+from clients.forms import MailingSendForm, ClientForm, MessageForm, UserForm
 from clients.models import Clients, Message, Mailing, MailingAttempt, EmailStatistics
 from config.settings import DEFAULT_FROM_EMAIL
 from django.views.decorators.cache import cache_page, cache_control
@@ -235,7 +236,26 @@ class ManegerClientListView(ListView):
     def get_queryset(self):
         return Clients.objects.all()
 
+class UserProfileView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = 'user_profile.html'
+    context_object_name = 'user_profile'
 
+    def get_object(self):
+        return self.request.user
+
+
+class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = UserForm
+    template_name = 'user_profile_update.html'
+    success_url = reverse_lazy('user_profile')
+
+    def get_object(self):
+        return self.request.user
+
+    def form_valid(self, form):
+        return super().form_valid(form)
 
 
 

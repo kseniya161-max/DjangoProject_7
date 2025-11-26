@@ -1,5 +1,7 @@
 from django.forms import ModelForm, forms
 from django.core.exceptions import ValidationError
+
+from Users.models import User
 from clients.models import Message, Clients, Mailing
 from django import forms
 
@@ -54,3 +56,14 @@ class MailingSendForm(forms.ModelForm):
         if datetime_start and datetime_end and  datetime_end < datetime_start:
             raise ValidationError('Дата завершения не может быть больше даты начала')
         return cleaned_data
+
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+        }
+
