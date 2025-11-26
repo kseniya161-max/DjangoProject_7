@@ -12,7 +12,8 @@ dependencies = [
     "django (>=5.2.8,<6.0.0)",
     "psycopg2 (>=2.9.11,<3.0.0)",
     "python-dotenv (>=1.2.1,<2.0.0)",
-    "itsdangerous (>=2.2.0,<3.0.0)"
+    "itsdangerous (>=2.2.0,<3.0.0)",
+    "redis (>=7.1.0,<8.0.0)"
 ]
 
 
