@@ -17,6 +17,11 @@ class Clients(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        permissions = [
+            ("can_manage_clients", "Can manage clients"),
+        ]
+
 
 class Message(models.Model):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
@@ -26,6 +31,11 @@ class Message(models.Model):
 
     def __str__(self):
         return self.header
+
+    class Meta:
+        permissions = [
+            ("can_manage_message", "Can manage message"),
+        ]
 
 
 class Mailing(models.Model):
@@ -44,6 +54,11 @@ class Mailing(models.Model):
     def __str__(self):
         return f'Рассылка: {self.message.header}  - Статус: {self.get_status_display()}'
 
+    class Meta:
+        permissions = [
+            ("can_manage_mailing", "Can manage mailing"),
+        ]
+
 
 class MailingAttempt(models.Model):
     """ Модель попытки рассылок"""
@@ -58,6 +73,11 @@ class MailingAttempt(models.Model):
 
     def __str__(self):
         return f'Попытка рассылки: {self.status} - {self.attempt_time}'
+
+    class Meta:
+        permissions = [
+            ("can_manage_mailing", "Can manage mailing"),
+        ]
 
 
 
