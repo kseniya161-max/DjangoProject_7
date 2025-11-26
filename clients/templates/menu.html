@@ -13,6 +13,7 @@
             <li><a class="nav-link" href="{% url 'clients:message_list' %}">Список сообщений</a></li>
             <li><a class="nav-link" href="{% url 'clients:mailing_list' %}">Список рассылок</a></li>
             <li><a class="nav-link" href="{% url 'clients:mailing_send' %}">Отправить рассылку</a></li>
+            <li><a class="nav-link" href="{% url 'clients:email_statistic' %}">Статистика рассылок</a></li>
             {% endif %}
             {% if user.is_authenticated %}
                     <form method="post" action="{% url 'Users:logout' %}" style="display:inline;">

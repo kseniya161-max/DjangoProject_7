@@ -75,6 +75,7 @@ class MessageListView(ListView):
     context_object_name = 'list_messages'
 
 
+
 class MessageCreateView(CreateView):
     model = Message
     form_class = MessageForm
