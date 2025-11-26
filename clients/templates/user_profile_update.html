@@ -2,6 +2,8 @@
 {% block title %} Редактировать профиль {% endblock %}
 {% block content %}
 <h1>Редактирование</h1>
-<p>Имя: {{ user_profile.username }}</p>
-<p>Email: {{ user_profile.email }}</p>
-<a href="{% url 'clients:user_profile_edit' %}">Редактировать профиль</a>
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit">Сохранить изменения</button>
+</form>
+<a href="{% url 'user_profile' %}">Отмена</a>
