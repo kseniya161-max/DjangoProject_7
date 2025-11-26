@@ -42,10 +42,18 @@ class MessageForm(ModelForm):
 
 
 class MailingSendForm(forms.ModelForm):
-    # mailing = forms.ModelChoiceField(queryset=Mailing.objects.all(), required=True)
     class Meta:
         model = Mailing
         fields=['recipients', 'message', 'status', 'datetime_start', 'datetime_end']
+
+    def __init__(self, *args, **kwargs):
+        super(MailingSendForm, self).__init__(*args, **kwargs)
+        self.fields['recipients'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите получателя'})
+        self.fields['message'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Выберите сообщение'})
+        self.fields['status'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Выберите статус'})
+        self.fields['datetime_start'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Дата старта'})
+        self.fields['datetime_end'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Дата окончания'})
+
 
 
     def clean(self):

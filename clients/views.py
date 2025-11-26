@@ -101,10 +101,13 @@ class MailingListView(ListView):
     context_object_name = 'list_mailing'
 
     def get_queryset(self):
-        if self.request.user.role == 'manager':
-            return Mailing.objects.all()
+        if self.request.user.is_authenticated:
+            if self.request.user.role == 'manager':
+                return Mailing.objects.all()
+            else:
+                return Mailing.objects.filter(user=self.request.user)
         else:
-            return Mailing.objects.filter(user=self.request.user)
+            return Mailing.objects.none()
 
 
 class MailingCreateView(CreateView):
@@ -152,6 +155,9 @@ class MailingDeleteView(DeleteView):
         if self.request.user.role == 'manager':
             return Mailing.objects.filter(user=self.request.user)
         return super().get_queryset()
+
+
+
 
 
 class MailingSendView(CreateView):
