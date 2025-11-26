@@ -48,6 +48,7 @@ class MailingSendForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
+        print(cleaned_data)
         datetime_start = cleaned_data.get('datetime_start')
         datetime_end = cleaned_data.get('datetime_end')
         if datetime_start and datetime_end and  datetime_end < datetime_start:

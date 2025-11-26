@@ -134,21 +134,10 @@ class MailingSendView(CreateView):
 
 
     def form_valid(self, form):
-        mailing = form.save(commit=False)
+        mailing = form.save()
         mailing.status = 'started'
         mailing.save()
-        try:
-
-            send_mail(
-                'Тестовое письмо',
-                'Это тестовое письмо от Django.',
-                DEFAULT_FROM_EMAIL,
-                ['baharevak161@gmail.com'],
-                fail_silently=True,
-            )
-        except Exception as e:
-            messages.error(self.request, f'Ошибка отправки тестового письма: {e}')
-            return super().form_invalid(form)
+        print(mailing.recipients.all())
 
         self.send_mailing(mailing)
         mailing.status = 'completed'
@@ -158,10 +147,12 @@ class MailingSendView(CreateView):
         return super().form_valid(form)
 
     def send_mailing(self, mailing):
+        print(mailing.recipients.all())
         success_count = 0
         failed_count = 0
         for recipient in mailing.recipients.all():
             try:
+                print(recipient.email)
                 send_mail(
                     mailing.message.header,
                     mailing.message.content,

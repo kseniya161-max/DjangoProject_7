@@ -8,7 +8,7 @@ from Users.models import User
 
 
 class Clients(models.Model):
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User,blank=True, null=True, on_delete=models.CASCADE)
     email = models.EmailField(max_length=100, unique=True)
     name = models.CharField(max_length = 100)
     comment = models.TextField(blank=True)
@@ -19,6 +19,7 @@ class Clients(models.Model):
 
 
 class Message(models.Model):
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     header = models.CharField(max_length=200)
     content = models.TextField()
 
@@ -38,7 +39,7 @@ class Mailing(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='created')
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
     recipients = models.ManyToManyField(Clients)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User,blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'Рассылка: {self.message.header}  - Статус: {self.get_status_display()}'
@@ -61,7 +62,7 @@ class MailingAttempt(models.Model):
 
 
 class EmailStatistics(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User,blank=True, null=True, on_delete=models.CASCADE)
     mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE)
     success_attempt_mailing = models.PositiveIntegerField(default=0)
     failed_attempt_mailing = models.PositiveIntegerField(default=0)
