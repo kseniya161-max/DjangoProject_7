@@ -1,10 +1,9 @@
-from django.forms import ModelForm, forms
+from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
 from Users.models import User
 from clients.models import Message, Clients, Mailing
 from django import forms
-
 
 
 class ClientForm(ModelForm):
@@ -19,12 +18,11 @@ class ClientForm(ModelForm):
         self.fields['name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите Имя'})
         self.fields['comment'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Напишите комментарий'})
 
-
     def clean_email(self):
         """ Валидация email"""
         email = self.cleaned_data.get('email')
         if Clients.objects.filter(email=email).exists():
-            raise ValidationError ('Пользовталь с таким email уже существует')
+            raise ValidationError('Пользовталь с таким email уже существует')
         return email
 
 
@@ -54,8 +52,6 @@ class MailingSendForm(forms.ModelForm):
         self.fields['datetime_start'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Дата старта'})
         self.fields['datetime_end'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Дата окончания'})
 
-
-
     def clean(self):
         cleaned_data = super().clean()
         print(cleaned_data)
@@ -74,5 +70,3 @@ class UserForm(forms.ModelForm):
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
         }
-
-

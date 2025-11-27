@@ -18,7 +18,6 @@ from config import settings
 from django.core.mail import send_mail
 
 
-
 class UserListView(LoginRequiredMixin, ListView):
     model = User
     template_name = 'user_list.html'
@@ -28,6 +27,7 @@ class UserListView(LoginRequiredMixin, ListView):
         if self.request.user.role == 'manager':
             return User.objects.all()
         return User.objects.none()
+
 
 class CreateUserView(CreateView):
     """Создаем представление для регистрации"""
@@ -54,7 +54,9 @@ class CreateUserView(CreateView):
         })
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
 
+
 User = get_user_model()
+
 
 def confirm_email(request, uidb64, token):
     """Подтверждение Email"""
@@ -87,10 +89,9 @@ class CustomLoginView(LoginView):
         return CustomLoginView
 
 
-
-
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy('Users:login')
+
     def __str__(self):
         return CustomLogoutView
 
@@ -98,6 +99,7 @@ class CustomLogoutView(LogoutView):
 class CustomPasswordResetView(PasswordResetView):
     template_name = 'registration/password_reset_form.html'
     success_url = reverse_lazy('Users:password_reset_done')
+
 
 class CustomPasswordResetDoneView(PasswordResetDoneView):
     template_name = 'registration/password_reset_done.html'
@@ -114,17 +116,17 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
 
 
 class BlockUserView(LoginRequiredMixin, View):
-    def post(self, request,user_id):
+    def post(self, request, user_id):
         if request.user.role != 'manager':
             messages.error(request, 'У вас нет прав для блокировки пользователя')
             return redirect('Users:user_block_confirm')
-
 
         user = get_object_or_404(User, id=user_id)
         user.is_active = False
         user.save()
         messages.success(request, 'Пользователь успешно заблокирован')
         return redirect('Users:user_block_confirm')
+
 
 class UnblockUserView(LoginRequiredMixin, View):
     def post(self, request, user_id):
@@ -163,11 +165,5 @@ class UnBlockUserConfirmationView(LoginRequiredMixin, View):
         user.save()
         messages.success(request, 'Пользователь успешно разблокирован.')
         return redirect('Users:user_list')
-
-
-
-
-
-
 
 

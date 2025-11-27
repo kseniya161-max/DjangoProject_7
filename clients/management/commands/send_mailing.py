@@ -4,6 +4,7 @@ from django.utils import timezone
 
 from clients.models import Mailing, MailingAttempt
 
+
 class Command(BaseCommand):
     help = 'Отправка рассылки'
 

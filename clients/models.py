@@ -8,11 +8,10 @@ from Users.models import User
 
 
 class Clients(models.Model):
-    user = models.ForeignKey(User,blank=True, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     email = models.EmailField(max_length=100, unique=True)
     name = models.CharField(max_length = 100)
     comment = models.TextField(blank=True)
-
 
     def __str__(self):
         return self.name
@@ -27,7 +26,6 @@ class Message(models.Model):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     header = models.CharField(max_length=200)
     content = models.TextField()
-
 
     def __str__(self):
         return self.header
@@ -80,14 +78,11 @@ class MailingAttempt(models.Model):
             ("can_manage_mailing", "Can manage mailing"),
         ]
 
-
-
 class EmailStatistics(models.Model):
-    user = models.ForeignKey(User,blank=True, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE)
     success_attempt_mailing = models.PositiveIntegerField(default=0)
     failed_attempt_mailing = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f'Количество успешных рассылок{self.success_attempt_mailing}, Количество неуспешных рассылок{self.failed_attempt_mailing}'
-

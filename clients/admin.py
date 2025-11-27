@@ -9,4 +9,3 @@ admin.site.register(Clients)
 admin.site.register(Message)
 admin.site.register(Mailing)
 admin.site.register(EmailStatistics)
-

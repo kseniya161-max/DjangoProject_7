@@ -11,8 +11,6 @@ class UserRegisterForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super(UserRegisterForm, self).__init__(*args, **kwargs)
-
-
         self.fields['email'].widget.attrs.update({
             'class': 'form-control',
             'placeholder': 'Введите email'

@@ -51,7 +51,7 @@ class ClientUpdateView(UpdateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        response =  super().form_valid(form)
+        response = super().form_valid(form)
 
         cache.delete(f'clients_{self.request.user.id}')
         return response
@@ -70,13 +70,12 @@ class ClientDeleteView(DeleteView):
         cache.delete(f'clients_{self.request.user.id}')
         return response
 
+
 @method_decorator(cache_control(public=True, max_age=86400), name='dispatch')
 class MessageListView(ListView):
     model = Message
     template_name = 'message_list.html'
     context_object_name = 'list_messages'
-
-
 
 class MessageCreateView(CreateView):
     model = Message
@@ -96,6 +95,7 @@ class MessageDeleteView(DeleteView):
     model = Message
     template_name = 'message_delete.html'
     success_url = reverse_lazy('clients:message_list')
+
 
 @method_decorator(cache_control(public=True, max_age=86400), name='dispatch')
 class MailingListView(ListView):
@@ -122,8 +122,6 @@ class MailingCreateView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
-
-
 
 class MailingUpdateView(UpdateView):
     model = Mailing
@@ -159,15 +157,10 @@ class MailingDeleteView(DeleteView):
             return Mailing.objects.filter(user=self.request.user)
         return super().get_queryset()
 
-
-
-
-
 class MailingSendView(CreateView):
     form_class = MailingSendForm
     template_name = 'mailing_send.html'
     success_url = reverse_lazy('clients:mailing_list')
-
 
     def form_valid(self, form):
         mailing = form.save()
@@ -217,16 +210,19 @@ class MailingSendView(CreateView):
                 'failed_attempt_mailing': failed_count,
             }
         )
+
+
 @method_decorator(cache_page(60 * 15), name='dispatch')
 class HomePageView(TemplateView):
     template_name = 'home.html'
 
-    def get_context_data(self,**kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['total_mailing'] = Mailing.objects.count()
         context['active_mailing'] = Mailing.objects.filter(status='started').count()
         context['unique_recipients'] = Clients.objects.count()
         return context
+
 
 class EmailStatisticsView(LoginRequiredMixin, ListView):
     model = EmailStatistics
@@ -244,6 +240,7 @@ class ManegerClientListView(ListView):
 
     def get_queryset(self):
         return Clients.objects.all()
+
 
 class UserProfileView(LoginRequiredMixin, DetailView):
     model = User
@@ -295,10 +292,3 @@ class DeactivateMailingConfirmView(LoginRequiredMixin, View):
         mailing.save()
         messages.success(request, 'Рассылка успешно отключена.')
         return redirect('clients:mailing_list')
-
-
-
-
-
-
-

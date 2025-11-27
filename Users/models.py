@@ -1,9 +1,10 @@
 from django.contrib.auth.models import AbstractUser, Group
 from django.db import models
 
+
 class User(AbstractUser):
     username = models.CharField(max_length=50, unique=True)
-    email = models.EmailField(max_length=50,unique=True, verbose_name='Email')
+    email = models.EmailField(max_length=50, unique=True, verbose_name='Email')
     email_verified = models.BooleanField(default=False, verbose_name='Email подтвержден')
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     country = models.CharField(max_length=15, null=True, blank=True)
