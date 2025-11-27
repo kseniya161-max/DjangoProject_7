@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %} Редактировать профиль {% endblock %}
+{% block content %}
+<h3>Редактирование</h3>
+<form method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit" class="btn btn-primary mt-1 mb-1">Сохранить </button>
+</form>
+<a href="{% url 'clients:user_profile' %}" class="btn btn-secondary">Отмена</a>
+{% endblock %}

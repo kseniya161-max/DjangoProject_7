@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %} Создание клиента {% endblock %}
+{% block content %}
+
+
+<h1>Создание клиента</h1>
+<form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="form-group">
+        {{ form.email.label }}
+        {{ form.email }}
+        {{ form.email.errors }}
+    </div>
+
+    <div class="form-group">
+        {{ form.name.label }}
+        {{ form.name }}
+        {{ form.name.errors }}
+    </div>
+
+    <div class="form-group">
+        {{ form.comment.label }}
+        {{ form.comment }}
+        {{ form.comment.errors }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a href="{% url 'clients:client_list' %}" class="btn btn-secondary">Отмена</a>
+</form>
+
+{% endblock %}
