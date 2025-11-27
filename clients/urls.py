@@ -29,3 +29,5 @@ urlpatterns = [
     path('mailing/<int:mailing_id>/deactivate/', DeactivateMailingView.as_view(), name='deactivate_mailing'),
     path('mailing/<int:mailing_id>/deactivate/confirm/', DeactivateMailingConfirmView.as_view(), name='deactivate_mailing_confirm'),
 ]
+
+

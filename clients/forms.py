@@ -42,7 +42,7 @@ class MessageForm(ModelForm):
 class MailingSendForm(forms.ModelForm):
     class Meta:
         model = Mailing
-        fields=['recipients', 'message', 'status', 'datetime_start', 'datetime_end']
+        fields = ['recipients', 'message', 'status', 'datetime_start', 'datetime_end']
 
     def __init__(self, *args, **kwargs):
         super(MailingSendForm, self).__init__(*args, **kwargs)

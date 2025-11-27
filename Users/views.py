@@ -165,5 +165,3 @@ class UnBlockUserConfirmationView(LoginRequiredMixin, View):
         user.save()
         messages.success(request, 'Пользователь успешно разблокирован.')
         return redirect('Users:user_list')
-
-

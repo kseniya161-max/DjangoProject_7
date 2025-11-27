@@ -69,7 +69,6 @@ class MailingAttempt(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
     server_response = models.TextField(blank=True)
 
-
     def __str__(self):
         return f'Попытка рассылки: {self.status} - {self.attempt_time}'
 
@@ -77,6 +76,7 @@ class MailingAttempt(models.Model):
         permissions = [
             ("can_manage_mailing", "Can manage mailing"),
         ]
+
 
 class EmailStatistics(models.Model):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)

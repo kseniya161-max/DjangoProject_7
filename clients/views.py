@@ -30,6 +30,7 @@ class ClientListView(LoginRequiredMixin, ListView):
 
         return queryset
 
+
 class ClientCreateView(LoginRequiredMixin, CreateView):
     model = Clients
     form_class = ClientForm
@@ -77,6 +78,7 @@ class MessageListView(ListView):
     template_name = 'message_list.html'
     context_object_name = 'list_messages'
 
+
 class MessageCreateView(CreateView):
     model = Message
     form_class = MessageForm
@@ -123,6 +125,7 @@ class MailingCreateView(CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+
 class MailingUpdateView(UpdateView):
     model = Mailing
     form_class = MailingSendForm
@@ -156,6 +159,7 @@ class MailingDeleteView(DeleteView):
         if self.request.user.role == 'manager':
             return Mailing.objects.filter(user=self.request.user)
         return super().get_queryset()
+
 
 class MailingSendView(CreateView):
     form_class = MailingSendForm
