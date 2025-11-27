@@ -2,12 +2,12 @@ from django.contrib.auth.models import AbstractUser, Group
 from django.db import models
 
 class User(AbstractUser):
-    username = models.CharField(max_length=50, unique=True,verbose_name='имя пользователя',help_text='Введите имя пользователя')
-    email = models.EmailField(max_length=50,unique=True, verbose_name='Email', help_text='Введите email')
+    username = models.CharField(max_length=50, unique=True)
+    email = models.EmailField(max_length=50,unique=True, verbose_name='Email')
     email_verified = models.BooleanField(default=False, verbose_name='Email подтвержден')
-    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True, help_text='Загрузите аватар')
-    country = models.CharField(max_length=15, null=True, blank=True,verbose_name='Страна проживания',help_text='Введите страну')
-    phone_number = models.CharField(max_length=15, null=True, blank=True,help_text='Введите номер телефона')
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    country = models.CharField(max_length=15, null=True, blank=True)
+    phone_number = models.CharField(max_length=15, null=True, blank=True)
     ROLE_CHOICES = [
         ('user', 'Пользователь'),
         ('manager', 'Менеджер'),
