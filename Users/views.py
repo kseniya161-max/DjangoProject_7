@@ -117,14 +117,14 @@ class BlockUserView(LoginRequiredMixin, View):
     def post(self, request,user_id):
         if request.user.role != 'manager':
             messages.error(request, 'У вас нет прав для блокировки пользователя')
-            return redirect('Users:user_list')
+            return redirect('Users:user_block_confirm')
 
 
         user = get_object_or_404(User, id=user_id)
         user.is_active = False
         user.save()
         messages.success(request, 'Пользователь успешно заблокирован')
-        return redirect('Users:user_list')
+        return redirect('Users:user_block_confirm')
 
 class UnblockUserView(LoginRequiredMixin, View):
     def post(self, request, user_id):
@@ -137,6 +137,33 @@ class UnblockUserView(LoginRequiredMixin, View):
         user.save()
         messages.success(request, 'Пользователь успешно разблокирован')
         return redirect('Users:user_list')
+
+
+class BlockUserConfirmationView(LoginRequiredMixin, View):
+    def get(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
+        return render(request, 'user_block_confirm.html', {'user': user})
+
+    def post(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
+        user.is_active = False
+        user.save()
+        messages.success(request, 'Пользователь успешно заблокирован.')
+        return redirect('Users:user_list')
+
+
+class UnBlockUserConfirmationView(LoginRequiredMixin, View):
+    def get(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
+        return render(request, 'user_unblock_confirm.html', {'user': user})
+
+    def post(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
+        user.is_active = True
+        user.save()
+        messages.success(request, 'Пользователь успешно разблокирован.')
+        return redirect('Users:user_list')
+
 
 
 
