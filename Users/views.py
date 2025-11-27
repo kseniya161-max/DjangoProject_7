@@ -3,12 +3,13 @@ from django.contrib.auth import get_user_model, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetDoneView, \
     PasswordResetCompleteView, PasswordResetConfirmView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.views import View
 from django.views.generic import CreateView, ListView
 from itsdangerous import URLSafeTimedSerializer
 from Users.forms import UserRegisterForm, CustomAuthenticationForm
@@ -110,6 +111,32 @@ class CustomPasswordResetCompleteView(PasswordResetCompleteView):
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     template_name = 'registration/password_reset_confirm.html'
     success_url = reverse_lazy('Users:password_reset_complete')
+
+
+class BlockUserView(LoginRequiredMixin, View):
+    def post(self, request,user_id):
+        if request.user.role != 'manager':
+            messages.error(request, 'У вас нет прав для блокировки пользователя')
+            return redirect('Users:user_list')
+
+
+        user = get_object_or_404(User, id=user_id)
+        user.is_active = False
+        user.save()
+        messages.success(request, 'Пользователь успешно заблокирован')
+        return redirect('Users:user_list')
+
+class UnblockUserView(LoginRequiredMixin, View):
+    def post(self, request, user_id):
+        if request.user.role != 'manager':
+            messages.error(request, 'У вас нет прав для разблокировки пользователя')
+            return redirect('Users:user_list')
+
+        user = get_object_or_404(User, id=user_id)
+        user.is_active = True
+        user.save()
+        messages.success(request, 'Пользователь успешно разблокирован')
+        return redirect('Users:user_list')
 
 
 
