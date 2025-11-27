@@ -68,6 +68,9 @@ class CustomLoginView(LoginView):
     def __str__(self):
         return CustomLoginView
 
+    def form_valid(self, form):
+        return redirect('clients:user_profile')
+
 
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy('Users:login')
