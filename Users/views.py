@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, login
 from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetDoneView, \
     PasswordResetCompleteView, PasswordResetConfirmView
 from django.shortcuts import render, redirect
@@ -65,11 +65,15 @@ class CustomLoginView(LoginView):
     template_name = 'login.html'
     authentication_form = CustomAuthenticationForm
 
+    def form_valid(self, form):
+        user = form.get_user()
+        login(self.request, user)
+        return redirect('clients:user_profile')
+
     def __str__(self):
         return CustomLoginView
 
-    def form_valid(self, form):
-        return redirect('clients:user_profile')
+
 
 
 class CustomLogoutView(LogoutView):
