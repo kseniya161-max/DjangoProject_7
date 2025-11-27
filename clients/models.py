@@ -42,7 +42,8 @@ class Mailing(models.Model):
     """ Модель рассылки"""
     STATUS_CHOICES = [('created', 'создана'),
                       ('started', 'запущена'),
-                      ('completed', 'завершена')]
+                      ('completed', 'завершена'),
+                      ('closed', 'отключена')]
 
     datetime_start = models. DateTimeField(default=timezone.now)
     datetime_end = models.DateTimeField(default=timezone.now() + timedelta(days=1))

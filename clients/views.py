@@ -1,9 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
+from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse_lazy
 from django.utils import cache
 from django.utils.decorators import method_decorator
+from django.views import View
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView, DetailView
 
 from Users.models import User
@@ -263,6 +265,32 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         return super().form_valid(form)
+
+
+class DeactivateMailingView(LoginRequiredMixin, View):
+    def post(self, request, mailing_id):
+        if request.user.role != 'manager':
+            messages.error(request, 'Только менеджер может отключить рассылку.')
+            return redirect('clients:mailing_list')
+
+        mailing = get_object_or_404(Mailing, id=mailing_id)
+        mailing.status = 'closed'
+        mailing.save()
+        messages.success(request, 'Рассылка успешно отключена.')
+        return redirect('clients:mailing_list')
+
+
+class DeactivateMailingConfirmView(LoginRequiredMixin, View):
+    def get(self, request, mailing_id):
+        mailing = get_object_or_404(Mailing, id=mailing_id)
+        return render(request, 'deactivate_mailing_confirm.html', {'mailing': mailing})
+
+    def post(self, request, mailing_id):
+        mailing = get_object_or_404(Mailing, id=mailing_id)
+        mailing.status = 'closed'
+        mailing.save()
+        messages.success(request, 'Рассылка успешно отключена.')
+        return redirect('clients:mailing_list')
 
 
 

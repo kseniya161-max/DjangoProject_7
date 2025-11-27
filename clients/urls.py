@@ -3,7 +3,7 @@ from django.urls import path, include
 from  clients.views import ClientListView, ClientCreateView, ClientUpdateView, ClientDeleteView, EmailStatisticsView
 from  clients.views import MailingListView,MailingCreateView,MailingUpdateView,MailingDeleteView,HomePageView
 from  clients.views import MessageListView, MessageCreateView, MessageUpdateView, MessageDeleteView,MailingSendView
-from  clients.views import ManegerClientListView, UserProfileView,UserProfileUpdateView
+from  clients.views import ManegerClientListView, UserProfileView,UserProfileUpdateView,DeactivateMailingView, DeactivateMailingConfirmView
 
 app_name = "clients"
 
@@ -26,4 +26,6 @@ urlpatterns = [
     path('manager/clients/', ManegerClientListView.as_view(), name='manager_client_list'),
     path('profile/', UserProfileView.as_view(), name='user_profile'),
     path('profile/edit/', UserProfileUpdateView.as_view(), name='user_profile_edit'),
+    path('mailing/<int:mailing_id>/deactivate/', DeactivateMailingView.as_view(), name='deactivate_mailing'),
+    path('mailing/<int:mailing_id>/deactivate/confirm/', DeactivateMailingConfirmView.as_view(), name='deactivate_mailing_confirm'),
 ]
