@@ -3,14 +3,13 @@
 {% block title %} Ваш профиль {% endblock %}
 
 {% block content %}
-<h1>Профиль пользователя</h1>
+<h3>Профиль пользователя</h3>
 <p>Имя: {{ user_profile.username }}</p>
 <p>Email: {{ user_profile.email }}</p>
-<a href="{% url 'clients:user_profile_edit' %}">Редактировать профиль</a>
-
+<a href="{% url 'clients:user_profile_edit' %}" class='btn btn-primary mb-3'>Редактировать профиль</a>
 {% if user_profile.role == 'manager' %}
-    <ul>
-        <li><a href="{% url 'Users:user_list' %}">Список пользователей</a></li>
-    </ul>
+<ul>
+<a href="{% url 'Users:user_list' %}" class='btn btn-primary mb-3'>Список пользователей</a>
+</ul>
 {% endif %}
 {% endblock %}

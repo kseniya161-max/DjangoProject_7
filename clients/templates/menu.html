@@ -25,6 +25,16 @@
             <li><a class="nav-link" href="{% url 'Users:register' %}">Регистрация</a></li>
             <li><a class="nav-link" href="{% url 'Users:login' %}">Войти</a></li>
             {% endif %}
+            </ul>
+            <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'clients:user_profile' %}">Мой профиль</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
 
 </ul>
     </div>
