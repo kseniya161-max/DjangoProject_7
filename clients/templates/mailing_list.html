@@ -34,10 +34,12 @@
             <td>
                 <a href="{% url 'clients:mailing_update' mail.pk %}" class='btn btn-primary mb-3'>Редактировать</a>
                 <a href="{% url 'clients:mailing_delete' mail.pk %}" class='btn btn-danger mb-3'>Удалить</a>
+                {% if user.role == 'manager' %}
                 <form method="get" action="{% url 'clients:deactivate_mailing_confirm' mail.id %}">
                 {% csrf_token %}
                 <button type="submit" class='btn btn-danger'>Отключить</button>
                 </form>
+                {% endif %}
             </td>
         </tr>
     {% empty %}

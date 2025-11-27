@@ -286,6 +286,10 @@ class DeactivateMailingConfirmView(LoginRequiredMixin, View):
         return render(request, 'deactivate_mailing_confirm.html', {'mailing': mailing})
 
     def post(self, request, mailing_id):
+        if request.user.role != 'manager':
+            messages.error(request, 'Только менеджер может отключить рассылку.')
+            return redirect('clients:mailing_list')
+
         mailing = get_object_or_404(Mailing, id=mailing_id)
         mailing.status = 'closed'
         mailing.save()

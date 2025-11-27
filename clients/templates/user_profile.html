@@ -8,8 +8,11 @@
 <p>Email: {{ user_profile.email }}</p>
 <a href="{% url 'clients:user_profile_edit' %}" class='btn btn-primary mb-3'>Редактировать профиль</a>
 {% if user_profile.role == 'manager' %}
-<ul>
+
+<ul class="list-unstyled">
+    <li>
 <a href="{% url 'Users:user_list' %}" class='btn btn-primary mb-3'>Список пользователей</a>
+    </li>
 </ul>
 {% endif %}
 {% endblock %}
