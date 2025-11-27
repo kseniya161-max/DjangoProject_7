@@ -1,8 +1,10 @@
 from django.urls import path
 from Users.views import CreateUserView, confirm_email, CustomLoginView, CustomLogoutView, CustomPasswordResetView, CustomPasswordResetDoneView
 from django.contrib.auth import views as auth_views
-from Users.views import CustomPasswordResetCompleteView, CustomPasswordResetConfirmView, UserListView, BlockUserView, UnblockUserView, BlockUserConfirmationView
-from Users.views import UnblockUserConfirmationView
+from Users.views import CustomPasswordResetCompleteView, CustomPasswordResetConfirmView, UserListView
+from Users.views import BlockUserView, UnblockUserView, BlockUserConfirmationView, UnBlockUserConfirmationView
+
+
 app_name = "Users"
 
 urlpatterns = [
