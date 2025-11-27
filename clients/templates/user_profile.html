@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
+
 {% block title %} Ваш профиль {% endblock %}
+
 {% block content %}
 <h1>Профиль пользователя</h1>
 <p>Имя: {{ user_profile.username }}</p>
 <p>Email: {{ user_profile.email }}</p>
 <a href="{% url 'clients:user_profile_edit' %}">Редактировать профиль</a>
+
+{% if user_profile.role == 'manager' %}
+    <ul>
+        <li><a href="{% url 'Users:user_list' %}">Список пользователей</a></li>
+    </ul>
+{% endif %}
 {% endblock %}

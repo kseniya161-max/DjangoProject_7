@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetDoneView, \
     PasswordResetCompleteView, PasswordResetConfirmView
 from django.shortcuts import render, redirect
@@ -8,13 +9,24 @@ from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 from itsdangerous import URLSafeTimedSerializer
 from Users.forms import UserRegisterForm, CustomAuthenticationForm
 from Users.models import User
 from config import settings
 from django.core.mail import send_mail
 
+
+
+class UserListView(LoginRequiredMixin, ListView):
+    model = User
+    template_name = 'user_list.html'
+    context_object_name = 'user_list'
+
+    def get_queryset(self):
+        if self.request.user.role == 'manager':
+            return User.objects.all()
+        return User.objects.none()
 
 class CreateUserView(CreateView):
     """Создаем представление для регистрации"""
