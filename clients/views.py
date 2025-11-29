@@ -269,6 +269,7 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
     def form_valid(self, form):
+        messages.success(self.request, 'Профиль успешно обновлен!')
         return super().form_valid(form)
 
 

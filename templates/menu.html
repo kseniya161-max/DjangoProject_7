@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Мой сайт</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,7 +14,6 @@
             <li><a class="nav-link" href="{% url 'clients:message_list' %}">Список сообщений</a></li>
             <li><a class="nav-link" href="{% url 'clients:mailing_list' %}">Список рассылок</a></li>
             <li><a class="nav-link" href="{% url 'clients:mailing_send' %}">Отправить рассылку</a></li>
-            <li><a class="nav-link" href="{% url 'clients:email_statistic' %}">Статистика рассылок</a></li>
             <li><a class="nav-link" href="{% url 'products:category_list' %}">Список Категорий</a></li>
                     <form method="post" action="{% url 'Users:logout' %}" style="display:inline;">
                     {% csrf_token %}
@@ -28,9 +28,10 @@
             <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'clients:user_profile' %}">Мой профиль</a>
+                    <a class="nav-link me-2" href="{% url 'clients:user_profile' %}">Мой профиль</a>
                 </li>
             {% endif %}
         </ul>
     </div>
 </nav>
+</div>
