@@ -1,6 +1,6 @@
 from django.urls import path
 
-from products.views import CategoryCreateView, CategoryListView, CategoryUpdateView, CategoryDetailView
+from products.views import CategoryCreateView, CategoryListView, CategoryUpdateView, CategoryDetailView, CategoryDeleteView
 
 app_name = "products"
 
