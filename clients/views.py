@@ -28,6 +28,10 @@ class ClientListView(LoginRequiredMixin, ListView):
             queryset = super().get_queryset().filter(user=self.request.user)
             cache.set(f'clients_{self.request.user.id}', queryset, 60 * 15)
 
+        location = self.request.GET.get('location')
+        if location:
+            queryset = queryset.filter(location__icontains=location)
+
         return queryset
 
 

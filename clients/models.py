@@ -12,6 +12,7 @@ class Clients(models.Model):
     email = models.EmailField(max_length=100, unique=True)
     name = models.CharField(max_length = 100)
     comment = models.TextField(blank=True)
+    location = models.CharField(max_length = 100, null=True, verbose_name='Укажите город')
 
     def __str__(self):
         return self.name
@@ -86,3 +87,5 @@ class EmailStatistics(models.Model):
 
     def __str__(self):
         return f'Количество успешных рассылок{self.success_attempt_mailing}, Количество неуспешных рассылок{self.failed_attempt_mailing}'
+
+

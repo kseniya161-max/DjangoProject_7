@@ -10,13 +10,14 @@ class ClientForm(ModelForm):
     """ Форма Создания клиента"""
     class Meta:
         model = Clients
-        fields = ['email', 'name', 'comment']
+        fields = ['email', 'name', 'comment', 'location']
 
     def __init__(self, *args, **kwargs):
         super(ClientForm, self).__init__(*args, **kwargs)
         self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите email'})
         self.fields['name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите Имя'})
         self.fields['comment'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Напишите комментарий'})
+        self.fields['location'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите город'})
 
     def clean_email(self):
         """ Валидация email"""
