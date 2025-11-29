@@ -92,8 +92,8 @@ class MessageCreateView(CreateView):
 
 class MessageUpdateView(UpdateView):
     model = Message
+    form_class = MessageForm
     template_name = 'message_update.html'
-    fields = ['header', 'content']
     success_url = reverse_lazy('clients:message_list')
 
 

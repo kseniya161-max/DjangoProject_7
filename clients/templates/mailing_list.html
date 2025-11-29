@@ -37,7 +37,7 @@
                 {% if user.role == 'manager' %}
                 <form method="get" action="{% url 'clients:deactivate_mailing_confirm' mail.id %}">
                 {% csrf_token %}
-                <button type="submit" class='btn btn-danger'>Отключить</button>
+                <button type="submit" class='btn btn-danger btn-sm mt-2 mb-2'>Отключить</button>
                 </form>
                 {% endif %}
             </td>
