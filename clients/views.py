@@ -268,6 +268,11 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self):
         return self.request.user
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_profile'] = self.request.user
+        return context
+
     def form_valid(self, form):
         messages.success(self.request, 'Профиль успешно обновлен!')
         return super().form_valid(form)

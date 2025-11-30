@@ -4,30 +4,30 @@
 
 {% block content %}
 <div class="container mt-4">
-<h3 class="mt-3 mb-3">Профиль пользователя</h3>
-<p>Имя: {{ user_profile.username }}</p>
-<p>Email: {{ user_profile.email }}</p>
-<p>Страна: {{ user_profile.country }}</p>
-<p>Телефон: {{ user_profile.phone_number }}</p>
-<p>Аватар:</p>
+<h2 class="mt-5 mb-5">Профиль пользователя</h2>
 
-{% if user_profile.avatar %}
-    <img src="{{ user_profile.avatar.url }}" alt="Аватар" style="width: 100px; height: 100px; border-radius: 50%;">
-{% else %}
-    <p>Аватар не загружен.</p>
-{% endif %}
 
-<!-- Форма для загрузки аватара -->
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}  <!-- Отображение полей формы -->
-    <button type="submit">Сохранить</button>  <!-- Кнопка для отправки формы -->
-</form>  <!-- Закрывающий тег формы -->
+    <div class="row">
+        <div class="col-md-3">
+            {% if user_profile.avatar %}
+                <img src="{{ user_profile.avatar.url }}" alt="Аватар" style="width: 200px; height: 200px; border-radius: 50%;">
+                    {% else %}
+                        <p>Загрузите аватар </p>
+                            {% endif %}
+        </div>
+                <div class="col-md-9">
+                    <p>Имя: {{ user_profile.username }}</p>
+                    <p>Email: {{ user_profile.email }}</p>
+                    <p>Страна: {{ user_profile.country }}</p>
+                    <p>Телефон: {{ user_profile.phone_number }}</p>
+                    <p>Роль Пользователя: {{ user_profile.role }}</p>
+                </div>
+    </div>
+
 
 <a href="{% url 'clients:user_profile_edit' %}" class="nav-link">
     <i class="bi bi-pencil"></i> Редактировать профиль
 </a>
-
 {% if user_profile.role == 'manager' %}
 <ul class="list-unstyled">
     <li>
