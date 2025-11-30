@@ -27,7 +27,7 @@ class CategoryUpdateView(UpdateView):
     form_class = CategoryForm
     template_name = 'category_update.html'
     context_object_name = 'category_update'
-    success_url = reverse_lazy('products:categories_list')
+    success_url = reverse_lazy('products:category_list')
 
 
 class CategoryDetailView(DetailView):
