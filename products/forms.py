@@ -7,9 +7,10 @@ class CategoryForm(ModelForm):
     """ Форма Создания Категории"""
     class Meta:
         model = Category
-        fields = ['name', 'photo']
+        fields = ['name', 'photo', 'description']
 
     def __init__(self, *args, **kwargs):
         super(CategoryForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите название категории'})
         self.fields['photo'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Фото'})
+        self.fields['description'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Описание'})

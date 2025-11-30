@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block title %} Список Категорий {% endblock %}
 {% block content %}
-<h3>Список Категорий</h3>
-<a href="{% url 'products:category_add' %}" class='btn btn-primary mb-3'>Добавить категорию</a>
+<h3 class="mt-3 mb-3">Список Категорий</h3>
+<a href="{% url 'products:category_add' %}" class='btn btn-primary btn-sm mt-3 mb-3'>Добавить категорию</a>
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -19,9 +19,10 @@
             <td>{{category.id}}</td>
             <td>{{category.name}}</td>
             <td>{{category.photo}}</td>
+            <td>{{category.description}}</td>
             <td>
-                <a href="{% url 'products:category_list' client.pk %}" class='btn btn-primary mb-3'>Редактировать</a>
-                <a href="{% url 'products:category_list' client.pk %}" class='btn btn-danger mb-3'>Удалить</a>
+                <a href="{% url 'products:category_edit' category.pk %}" class='btn btn-primary btn-sm mt-3 mb-3'>Редактировать</a>
+                <a href="{% url 'products:category_delete' category.pk %}" class='btn btn-danger btn-sm mt-3 mb-3'>Удалить</a>
             </td>
         </tr>
     {% empty %}

@@ -19,7 +19,7 @@ class CategoryCreateView(CreateView):
     form_class = CategoryForm
     template_name = 'category_create.html'
     context_object_name = 'category_add'
-    success_url = reverse_lazy('categories_list')
+    success_url = reverse_lazy('products:category_list')
 
 
 class CategoryUpdateView(UpdateView):
@@ -27,7 +27,7 @@ class CategoryUpdateView(UpdateView):
     form_class = CategoryForm
     template_name = 'category_update.html'
     context_object_name = 'category_update'
-    success_url = reverse_lazy('categories_list')
+    success_url = reverse_lazy('products:categories_list')
 
 
 class CategoryDetailView(DetailView):

@@ -6,6 +6,7 @@ class Category(models.Model):
     """
     name = models.CharField(max_length=50, verbose_name='Категория продукта')
     photo = models.ImageField(upload_to='photo/category/', blank=True, null=True, verbose_name='Фото')
+    description = models.CharField(max_length=250, blank=True, null=True, verbose_name='Описание')
 
     def __str__(self):
         return self.name
