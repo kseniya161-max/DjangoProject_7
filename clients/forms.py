@@ -32,12 +32,13 @@ class MessageForm(ModelForm):
 
     class Meta:
         model = Message
-        fields = ['header', 'content']
+        fields = ['header', 'content', 'product']
 
     def __init__(self, *args, **kwargs):
         super(MessageForm, self).__init__(*args, **kwargs)
         self.fields['header'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите Заголовок'})
         self.fields['content'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите Контент'})
+        self.fields['product'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите товар'})
 
 
 class MailingSendForm(forms.ModelForm):
@@ -66,7 +67,7 @@ class MailingSendForm(forms.ModelForm):
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'email', 'avatar', 'country', 'phone_number', 'role']
+        fields = ['username', 'email', 'avatar', 'country', 'phone_number', 'role',]
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),

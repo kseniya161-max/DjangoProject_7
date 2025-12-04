@@ -5,6 +5,7 @@ from django.db.models import PositiveIntegerField
 from django.utils import timezone
 
 from Users.models import User
+from products.models import Product
 
 
 class Clients(models.Model):
@@ -27,6 +28,7 @@ class Message(models.Model):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     header = models.CharField(max_length=200)
     content = models.TextField()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Наименование товара')
 
     def __str__(self):
         return self.header
