@@ -27,8 +27,10 @@ class ProductForm(ModelForm):
         super(ProductForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите название товара'})
         self.fields['photo'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Фото'})
+        self.fields['description'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Описание товара'})
         self.fields['category'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Категория товара'})
         self.fields['quantity'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Количество товара'})
+
 
 
 

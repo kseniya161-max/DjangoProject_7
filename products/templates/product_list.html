@@ -19,7 +19,6 @@
         <tr>
             <td>{{product.id}}</td>
             <td>{{product.name}}</td>
-            <td>{{product.quantity}}</td>
             <td>
                 {% if product.photo %}
                 <img src="{{ product.photo.url }}" alt="{{ product.name }}" style="width: 100px; height: auto;">
@@ -27,9 +26,11 @@
                 <p>Фото не загружено.</p>
                 {% endif %}
             </td>
+                <td>{{product.quantity}}</td>
                 <td>{{product.description}}</td>
+
             <td>
-                <a href="{% url 'products:product_create' product.pk %}" class='btn btn-primary btn-sm mt-3 mb-3'>Редактировать</a>
+                <a href="{% url 'products:product_update' product.pk %}" class='btn btn-primary btn-sm mt-3 mb-3'>Редактировать</a>
                 <a href="{% url 'products:product_delete' product.pk %}" class='btn btn-danger btn-sm mt-3 mb-3'>Удалить</a>
             </td>
         </tr>
