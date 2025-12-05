@@ -32,8 +32,8 @@
                 {% endfor %}
             </td>
             <td>
-                <a href="{% url 'clients:mailing_update' mail.pk %}" class='btn btn-primary btn-sm mt-2 mb-2'>Редактировать</a>
-                <a href="{% url 'clients:mailing_delete' mail.pk %}" class='btn btn-danger btn-sm mt-2 mb-2'>Удалить</a>
+                <a href="{% url 'clients:mailing_update' mail.id %}" class='btn btn-primary btn-sm mt-2 mb-2'>Редактировать</a>
+                <a href="{% url 'clients:mailing_delete' mail.id %}" class='btn btn-danger btn-sm mt-2 mb-2'>Удалить</a>
                 {% if user.role == 'manager' %}
                 <form method="get" action="{% url 'clients:deactivate_mailing_confirm' mail.id %}">
                 {% csrf_token %}

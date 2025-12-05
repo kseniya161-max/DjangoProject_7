@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
+from django.db.models import Sum
 from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse_lazy
 from django.utils import cache
@@ -161,8 +162,8 @@ class MailingDeleteView(DeleteView):
 
     def get_queryset(self):
         if self.request.user.role == 'manager':
-            return Mailing.objects.filter(user=self.request.user)
-        return super().get_queryset()
+            return Mailing.objects.all()
+        return Mailing.objects.filter(user=self.request.user)
 
 
 class MailingSendView(CreateView):
@@ -238,7 +239,27 @@ class EmailStatisticsView(LoginRequiredMixin, ListView):
     context_object_name = 'statistic'
 
     def get_queryset(self):
-        return EmailStatistics.objects.filter(user=self.request.user)
+        if self.request.user.role == 'manager':
+            return EmailStatistics.objects.select_related('mailing').values(
+                'mailing__message__header', 'mailing__status'
+            ).annotate(
+                total_success=Sum('success_attempt_mailing'),
+                total_failed=Sum('failed_attempt_mailing')
+            ).order_by('mailing__message__header')
+        else:
+            return EmailStatistics.objects.filter(user=self.request.user).select_related('mailing').values(
+                'mailing__message__header', 'mailing__status'
+            ).annotate(
+                total_success=Sum('success_attempt_mailing'),
+                total_failed=Sum('failed_attempt_mailing')
+            ).order_by('mailing__message__header')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['total_success'] = sum(stat['total_success'] for stat in self.object_list)
+        context['total_failed'] = sum(stat['total_failed'] for stat in self.object_list)
+        context['total_attempts'] = context['total_success'] + context['total_failed']
+        return context
 
 
 class ManegerClientListView(ListView):

@@ -12,14 +12,16 @@
                 <th>Рассылка</th>
                 <th>Успешные попытки</th>
                 <th>Неуспешные попытки</th>
+                <th>Итого</th>
             </tr>
         </thead>
         <tbody>
             {% for stat in statistic %}
                 <tr>
-                    <td>{{ stat.mailing }}</td>
-                    <td>{{ stat.success_attempt_mailing }}</td>
-                    <td>{{ stat.failed_attempt_mailing }}</td>
+                    <td>{{ stat.mailing__message__header }} - Статус: {{ stat.mailing__status }}</td>
+                    <td>{{ stat.total_success }}</td>
+                    <td>{{ stat.total_failed }}</td>
+                    <td>{{ stat.total_success|add:stat.total_failed }}</td>
                 </tr>
             {% endfor %}
         </tbody>
