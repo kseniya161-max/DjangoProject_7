@@ -10,6 +10,7 @@
         <thead>
             <tr>
                 <th>Рассылка</th>
+                <th>Пользователь</th>
                 <th>Успешные попытки</th>
                 <th>Неуспешные попытки</th>
                 <th>Итого</th>
@@ -19,6 +20,7 @@
             {% for stat in statistic %}
                 <tr>
                     <td>{{ stat.mailing__message__header }} - Статус: {{ stat.mailing__status }}</td>
+                    <td>{{ stat.user__username }}</td>
                     <td>{{ stat.total_success }}</td>
                     <td>{{ stat.total_failed }}</td>
                     <td>{{ stat.total_success|add:stat.total_failed }}</td>

@@ -188,6 +188,7 @@ class MailingSendView(CreateView):
         print(mailing.recipients.all())
         success_count = 0
         failed_count = 0
+        print(f'Current user: {self.request.user}')
         for recipient in mailing.recipients.all():
             try:
                 print(recipient.email)
@@ -211,6 +212,7 @@ class MailingSendView(CreateView):
                     server_response=str(e)
                 )
                 failed_count += 1
+        print(f"User: {self.request.user}")
         EmailStatistics.objects.update_or_create(
             user=self.request.user,
             mailing=mailing,
@@ -219,6 +221,8 @@ class MailingSendView(CreateView):
                 'failed_attempt_mailing': failed_count,
             }
         )
+        print(f"EmailStatistics created/updated for user: {self.request.user}, mailing: {mailing}, "
+              f"success: {success_count}, failed: {failed_count}")
 
 
 @method_decorator(cache_page(60 * 15), name='dispatch')
@@ -241,14 +245,14 @@ class EmailStatisticsView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         if self.request.user.role == 'manager':
             return EmailStatistics.objects.select_related('mailing').values(
-                'mailing__message__header', 'mailing__status'
+                'mailing__message__header', 'mailing__status', 'user__username'
             ).annotate(
                 total_success=Sum('success_attempt_mailing'),
                 total_failed=Sum('failed_attempt_mailing')
             ).order_by('mailing__message__header')
         else:
             return EmailStatistics.objects.filter(user=self.request.user).select_related('mailing').values(
-                'mailing__message__header', 'mailing__status'
+                'mailing__message__header', 'mailing__status', 'user__username'
             ).annotate(
                 total_success=Sum('success_attempt_mailing'),
                 total_failed=Sum('failed_attempt_mailing')
