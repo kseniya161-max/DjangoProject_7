@@ -30,6 +30,7 @@
                     {% csrf_token %}
                     <button type="submit" class='btn btn-primary btn-sm mt-3 mb-3'>Разблокировать</button>
                 </form>
+                 <a href="{% url 'Users:user_detail' user.id %}" class='btn btn-primary btn-sm mt-2 mb-2'>Подробнее</a>
             </td>
         </tr>
         {% empty %}
